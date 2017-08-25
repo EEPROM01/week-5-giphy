@@ -29,21 +29,50 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
  <script type="text/javascript">
     
-          $(document).ready()
+  $(document).ready(function() {
 
-     var topics = ["Wolverine", "Camel", "Trump", "lions"]
-     
-            function alertGifName() {
-             var gifName = $(this).attr("data-name");
-        alert(topics);
+    var topics = ["Wolverine", "Camel", "Trump", "lions"];
+
+
+     // function to render our buttons
+  function renderButtons() {
+      $("#buttons-view").empty();
+  // Looping through the array names
+  for (var i = 0; i < topics.length; i++) {
+      var a = $("<button>");
+    // Adding a class of gifButton to our button
+    a.addClass("gifButton");
+    // Adding a data-attribute
+    a.attr("data-name", topics[i]);
+    // Providing the initial button text
+    a.text(topics[i]);
+    // Adding the button to the HTML
+    $("#buttons-view").append(a);
       }
-      // Function that displays all of the gifs
-function displayGifs(){ 
-    var gif = $(this).attr("data-name");
+    }
+      renderButtons();
+      // / This function handles events where one button is clicked
+    $("#add-gif").on("click", function(event) {
+      // Preventing the buttons default behavior when clicked (which is submitting a form)
+    event.preventDefault();
+    // This line grabs the input from the textbox
+    var gif = $("#gif-input").val().trim();
 
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + gif + "&api_key=dc6zaTOxFJmzC&limit=10";
+    // Adding the gif to topic array
+    topics.push(gif);
 
+    // Calling renderButtons which handles the processing of our  array
+    renderButtons();
+
+    });
+
+    $('#buttons-view').on("click", '.gifButton',function(event) {
+       event.preventDefault();
+      var gifName = $(this).attr("data-name");
+       var gif = $(this).attr("data-name");
+  
    
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + gif + "&api_key=dc6zaTOxFJmzC&limit=10";
 
     $.ajax({
         url: queryURL,
@@ -52,7 +81,7 @@ function displayGifs(){
 
     .done(function(response) {
 
-        console.log(response); // console test to make sure something returns
+        console.log(response.data); // console test to make sure something returns
         $("#gifsView").empty(); // erasing anything in this div id so that it doesnt keep any from the previous click
         var results = response.data; //shows results of gifs
         if (results == ""){
@@ -77,58 +106,8 @@ function displayGifs(){
             $("#gifsView").prepend(gifDiv);
         }
     });
-}
-        //WORKS!!
-       function renderButtons() {
 
-       $("#buttons-view").empty();
-
-        // Looping through the array of movies
-        for (var i = 0; i < topics.length; i++) {
-
-            var a = $("<button>");
-          // Adding a class of gif to our button
-          a.addClass("gif");
-          // Adding a data-attribute
-          a.attr("data-name", topics[i]);
-          // Providing the initial button text
-          a.text(topics[i]);
-          // Adding the button to the HTML
-          $("#buttons-view").append(a);
-        }
-      }
-
-      // / This function handles events where one button is clicked
-      $("#add-gif").on("click", function(event) {
-        // Preventing the buttons default behavior when clicked (which is submitting a form)
-        event.preventDefault();
-        // This line grabs the input from the textbox
-        var gif = $("#gif-input").val().trim();
-
-        // Adding the gif to topic array
-        topics.push(gif);
-
-        // Calling renderButtons which handles the processing of our  array
-        renderButtons();
-      });
-
-      // Function for displaying gif data
-       function displayGifInfo() {
-
-        var gif = $(this).attr("data-name");
-        $.ajax({
-          url: queryURL,
-          method: "GET"
-        }).done(function(response) {
-          $("#gif-view").html(JSON.stringify(response));
-          renderButtons();
-        })
-      }
-
-
-// Function for animating gifs when
-     
-    //  $("#topics").on("click", function() {
+    //      $(".image").on("click", function() {
     //   // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
     //   var state = $(this).attr("data-state");
     //   // If the clicked image's state is still, update its src attribute to what its data-animate value is.
@@ -140,8 +119,13 @@ function displayGifs(){
     //   } else {
     //     $(this).attr("src", $(this).attr("data-still"));
     //     $(this).attr("data-state", "still");
-    // }
+    //     }
     // });
+
+    })
+});
+   
+
 
   </script>
   </div>
