@@ -34,7 +34,6 @@
     // Setting my initals var(s) for topics
     var topics = ["Wolverine", "Camel", "Trump", "tick","mars"];
       $("displayContainer").hide();
-
      // function to render our buttons
   function renderButtons() {
       $("#buttons-view").empty();
@@ -58,15 +57,11 @@
     event.preventDefault();
     // This line grabs the input from the textbox
     var gif = $("#gif-input").val().trim();
-
     // Adding the gif to topic array
     topics.push(gif);
-
     // Calling renderButtons which handles the processing of our  array
     renderButtons();
-
     });
-
     $('#buttons-view').on("click", '.gifButton',function(event) {
        event.preventDefault();
       var gifName = $(this).attr("data-name");
@@ -74,14 +69,11 @@
   
    
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + gif + "&api_key=dc6zaTOxFJmzC&limit=10";
-
     $.ajax({
         url: queryURL,
         method: 'GET'
     })
-
     .done(function(response) {
-
         console.log(response.data); // console test to make sure something returns
         $("#gifsView").empty(); // erasing anything in this div id so that it doesnt keep any from the previous click
         var results = response.data; //shows results of gifs
@@ -119,10 +111,8 @@
         $(this).attr("data-state", "still");
         }
     });
-
         }
     });
-
     // Function for displaying gif data
        function displayGifInfo() {
         var gif = $(this).attr("data-name");
@@ -134,12 +124,9 @@
           renderButtons();
         });
       }
-
-
     });
 });
    
-
   </script>
   
 
