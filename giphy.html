@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <title>Gif Searcher</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
 </head>
 
@@ -16,23 +17,23 @@
     <div id="buttons-view"></div>
     <div id="gif-view"></div>
 
-    <form id="gif-form">
+  <form id="gif-form">
      <!--  setting label - display button use -->
       <label for="gif-input">Add a New Catagory</label>
     <!--   setting input type -->
       <input type="text" id="gif-input"><br>
 
       <!-- Button triggers new gif to be added -->
-      <input id="add-gif" type="submit" value="Search">
-    </form>
-  
+      <input id="add-gif" type="submit" value="Search" style="color: blue">
+  </form>
+  <!-- Load in JS/jquery library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
- <script type="text/javascript">
-    
+  <script type="text/javascript">
+  // call to jquery
   $(document).ready(function() {
-
-    var topics = ["Wolverine", "Camel", "Trump", "lions"];
-
+    // Setting my initals var(s) for topics
+    var topics = ["Wolverine", "Camel", "Trump", "tick","mars"];
+      $("displayContainer").hide();
 
      // function to render our buttons
   function renderButtons() {
@@ -43,7 +44,7 @@
     // Adding a class of gifButton to our button
     a.addClass("gifButton");
     // Adding a data-attribute
-    a.attr("data-name", topics[i]);
+    a.attr("data-name",topics[i]);
     // Providing the initial button text
     a.text(topics[i]);
     // Adding the button to the HTML
@@ -91,44 +92,63 @@
             var gifDiv = $("<div>"); //div for the gifs to go inside
             gifDiv.addClass("gifDiv");//make it a class
             // pulling rating of gif
-            var gifRating = $("<p>").text("Rating: " + results[i].rating);
-            gifDiv.append(gifRating);
+            // fixed_height_small_still.url
             // pulling gif
             var gifImage = $("<img>");
             gifImage.attr("src", results[i].images.fixed_height_small_still.url); // still image stored into src of image
             gifImage.attr("data-still",results[i].images.fixed_height_small_still.url); // still image
-            gifImage.attr("data-animate",results[i].images.fixed_height_small.url); // animated image
+            gifImage.attr("data-animate",results[i].images.original.url); // animated image
             gifImage.attr("data-state", "still"); // set the image state
             gifImage.addClass("image");
             gifDiv.append(gifImage);
-            // pulling still image of gif
+            // pulling still image of gifs
+            var gifRating = $("<p>").text("Rating: " + results[i].rating);
+            gifDiv.append(gifRating);
             // adding div of gifs to gifsView div
-            $("#gifsView").prepend(gifDiv);
+            $("#gifsView").append(gifDiv);
+       // Onlick function for animation
+            $(".image").on("click", function() {
+      // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
+      var state = $(this).attr("data-state");
+      
+      if (state === "still") {
+        $(this).attr("src", $(this).attr("data-animate"));
+        $(this).attr("data-state", "animate");
+      } else {
+        $(this).attr("src", $(this).attr("data-still"));
+        $(this).attr("data-state", "still");
         }
     });
 
-    //      $(".image").on("click", function() {
-    //   // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
-    //   var state = $(this).attr("data-state");
-    //   // If the clicked image's state is still, update its src attribute to what its data-animate value is.
-    //   // Then, set the image's data-state to animate
-    //   // Else set src to the data-still value
-    //   if (state === "still") {
-    //     $(this).attr("src", $(this).attr("data-animate"));
-    //     $(this).attr("data-state", "animate");
-    //   } else {
-    //     $(this).attr("src", $(this).attr("data-still"));
-    //     $(this).attr("data-state", "still");
-    //     }
-    // });
+        }
+    });
 
-    })
+    // Function for displaying gif data
+       function displayGifInfo() {
+        var gif = $(this).attr("data-name");
+        $.ajax({
+          url: queryURL,
+          method: "GET"
+        }).done(function(response) {
+          $("#gifsView").html(JSON.stringify(response));
+          renderButtons();
+        });
+      }
+
+
+    });
 });
    
 
-
   </script>
+  
+
+<div class="displayContainer" style="border-style: solid; background-color: brown; padding-top: 20px; margin-top: 20px;">
+    <div class="jumbotron">
+      <div class="lead" style=" border-style: ridge; background-color: grey; padding-left: 30px; padding-top: 20px; ">
+      <span id="gifsView" sytle="float: left;"></span>
   </div>
+</div>
 </body>
 
 </html>
