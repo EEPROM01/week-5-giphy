@@ -4,7 +4,8 @@
 <head>
   <meta charset="utf-8">
   <title>Gif Searcher</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous<link rel="stylesheet" type="text/css" href="mystyle.css">
+<link rel="stylesheet" type="text/css" href="style.css">
 
 </head>
 
@@ -129,13 +130,23 @@
    
   </script>
   
+  <!--  Display container  -->
+    <div class="displayContainer">
+      <div class="jumbotron container-fluid">
+        <div id="gifsView">
+          <div class="lead"></div>
+       </div>
+      </div>
+    </div>
 
-<div class="displayContainer" style="border-style: solid; background-color: brown; padding-top: 20px; margin-top: 20px;">
-    <div class="jumbotron">
-      <div class="lead" style=" border-style: ridge; background-color: grey; padding-left: 30px; padding-top: 20px; ">
-      <span id="gifsView" sytle="float: left;"></span>
-  </div>
-</div>
+   <!--  Giphy footer -->
+    <div class="jumbotron footer row">
+      <footer>
+        <img src="https://raw.githubusercontent.com/robrollner/gifTastic/master/assets/images/Giphy%20Attribution%20Marks/Animated%20Logos/PoweredBy_200_Horizontal_Light-Backgrounds_With_Logo.gif">
+      </footer>
+    </div>
+    
+
 </body>
 
 </html>

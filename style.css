@@ -1,0 +1,37 @@
+body{
+	background-color: linen;
+}
+
+
+.gifDiv {
+    float: left;
+    margin: 4px;
+}
+
+.displayContainer{border-style: solid; 
+	background-color: brown; 
+	margin-top: 20px;
+	padding: 20px;
+}
+
+
+    
+.lead{border-style: ridge;
+ background-color: grey; 
+ padding-left: 30px; 
+ padding-top: 20px;
+  }
+
+ .gifButton {
+ 	background-color: blue;
+ 	margin: 2px;
+ }
+
+.jumbotron.footer.row{
+text-align: center;
+background-color: black;
+margin-top: 10px;
+width: 1142px;
+height: 80px;
+margin-left: 0px;
+}
